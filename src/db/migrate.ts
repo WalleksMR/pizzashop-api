@@ -6,7 +6,16 @@ import { migrate } from 'drizzle-orm/postgres-js/migrator'
 
 import { env } from '@/env'
 
-const connection = postgres(env.DB_URL, { max: 1 })
+const connection = postgres(env.DB_URL, {
+  max: 1,
+  ...(env.NODE_ENV === 'prod'
+    ? {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      }
+    : {}),
+})
 const db = drizzle(connection)
 
 await migrate(db, { migrationsFolder: 'drizzle' })

@@ -26,6 +26,7 @@ import { getDailyReceiptInPeriod } from './routes/get-daily-receipt-in-period'
 import { getPopularProducts } from './routes/get-popular-products'
 import { dispatchOrder } from './routes/dispatch-order'
 import { deliverOrder } from './routes/deliver-order'
+import { env } from '@/env'
 
 const app = new Elysia()
   .use(
@@ -87,7 +88,7 @@ const app = new Elysia()
     }
   })
 
-app.listen(3333)
+app.listen({ port: env.PORT, hostname: env.HOSTNAME })
 
 console.log(
   `🔥 HTTP server running at ${app.server?.hostname}:${app.server?.port}`,
