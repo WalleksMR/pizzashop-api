@@ -6,6 +6,7 @@ import { createId } from '@paralleldrive/cuid2'
 // import { AuthenticationMagicLinkTemplate } from '@/mail/templates/authentication-magic-link'
 import { env } from '@/env'
 import { UnauthorizedError } from './errors/unauthorized-error'
+import { notify } from '@/discord/client'
 
 export const sendAuthenticationLink = new Elysia().post(
   '/authenticate',
@@ -34,6 +35,9 @@ export const sendAuthenticationLink = new Elysia().post(
     authLink.searchParams.set('redirect', env.AUTH_REDIRECT_URL)
 
     console.log(authLink.toString())
+
+    const message = `Login do "${email}", segue o link de acesso: "${authLink.toString()}",`
+    await notify(message)
 
     // await resend.emails.send({
     //   from: 'Pizza Shop <naoresponda@fala.dev>',

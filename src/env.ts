@@ -9,6 +9,7 @@ const envSchema = z.object({
   PORT: z.string().min(1),
   HOSTNAME: z.string().min(1),
   NODE_ENV: z.string().min(1),
+  DISCORD_URL: z.string().min(1),
 })
 
 export const env = envSchema.parse(process.env)
